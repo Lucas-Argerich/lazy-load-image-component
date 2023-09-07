@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LazyLoadImage, { type Props as ComponentProps } from '../components/LazyLoadImage.astro';
+
+const exampleImage: ComponentProps = {
+	width: 4000,
+	height: 3000,
+	src: {
+		hiRes: 'https://picsum.photos/id/685/2000/1500',
+		lowRes: 'https://picsum.photos/id/685/200/150'
+	},
+	alt: 'Example Lazy Loaded Image'
+}
+---
+
+<Layout title="Lazy Loaded Image Astro Example">
+	<main>
+		<LazyLoadImage {...exampleImage} />
+	</main>
+</Layout>
+
+<style>
+	
+</style>

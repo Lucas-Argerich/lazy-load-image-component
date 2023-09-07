@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets'
+
+interface LazyLoadImageSource {
+  lowRes: string
+  hiRes: string
+}
+
+export interface Props {
+  width: number
+  height: number
+  src: LazyLoadImageSource
+  alt: string
+}
+
+const { width, height, src, alt } = Astro.props
+---
+
+<div
+  class="placeholder"
+  style={{ backgroundImage: `url(${src.lowRes})` }}
+  aria-hidden="true"
+	>
+  <Image src={src.hiRes} alt={alt} width={width} height={height} />
+	<span class="blur"></span>
+</div>
+
+<style>
+  .placeholder {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+  }
+
+  .placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+  }
+	
+	.blur {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		backdrop-filter: blur(4px);
+		transition: backdrop-filter 1s ease-in-out;
+	}
+
+  .placeholder.loaded img {
+    opacity: 1;
+  }
+
+	.placeholder.loaded .blur {
+		backdrop-filter: blur(0);
+	}
+</style>
+
+<script>
+  const placeholder = document.querySelector('.placeholder')
+  const img = placeholder?.querySelector('img')
+  function loaded() {
+    placeholder?.classList.add('loaded')
+  }
+  if (img?.complete) {
+    loaded()
+  } else {
+    img?.addEventListener('load', loaded)
+  }
+</script>
