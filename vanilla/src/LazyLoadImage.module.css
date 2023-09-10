@@ -1,0 +1,33 @@
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+.placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+
+.blur {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  backdrop-filter: blur(4px);
+  transition: backdrop-filter 1s ease-in-out;
+}
+
+.placeholder.loaded img {
+  opacity: 1;
+}
+
+.placeholder.loaded .blur {
+  backdrop-filter: blur(0);
+}
